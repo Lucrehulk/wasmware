@@ -9,6 +9,8 @@ Wasmware takes your JS file (containing the glue code) and your WAT file (you ca
 
 Input the necesssary config and input data into the txts, and run ```node build``` to produce your output files.
 
+Make sure that when you build the output, you ensure that your key.txt input has the key on a single line.
+
 In order to actually execute the wasmware, you'll have to call upon the wasmware export function you build into the WebAssembly module. The code doesn't automatically place a call for you as you could either call this within the WebAssembly or in the JS glue code. All you have to do though is simply call upon this export in order for it to execute.
 
 In case you would like to manually modify the JS file with your imports, or the JS file writer isn't working as intended, I'm leaving the two imports below so you can manually add them yourself. 
