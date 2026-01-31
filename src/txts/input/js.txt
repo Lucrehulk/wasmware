@@ -1,0 +1,20 @@
+const fs = require('fs');
+
+let u8; 
+let l = new TextDecoder();
+
+const importObject = {
+  env: {
+    log: (num) => {
+      console.log("WASM says:", num);
+    },
+  },
+};
+
+const wasmBuffer = fs.readFileSync('module.wasm');
+
+WebAssembly.instantiate(wasmBuffer, importObject).then(result => {
+  const wasmInstance = result.instance;
+  u8 = new Uint8Array(wasmInstance.exports.memory.buffer);
+  wasmInstance.exports.main();
+});
