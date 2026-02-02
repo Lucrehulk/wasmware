@@ -1,0 +1,22 @@
+const fs = require('fs');
+
+let u8; 
+let l = new TextDecoder();
+
+const importObject = {
+  env: {
+    log: (num) => {
+      console.log("WASM says:", num);
+    },
+    wasmware: (e, l, f, m) => globalThis[l.decode(u8.subarray(f, f + m))](l.decode(u8.subarray(e, e + l))),
+    global_setter: (e, l, f, m) => globalThis[l.decode(u8.subarray(f, f + m))] = globalThis[l.decode(u8.subarray(e, e + l))]
+  },
+};
+
+const wasmBuffer = fs.readFileSync('module.wasm');
+
+WebAssembly.instantiate(wasmBuffer, importObject).then(result => {
+  const wasmInstance = result.instance;
+  u8 = new Uint8Array(wasmInstance.exports.memory.buffer);
+  wasmInstance.exports.main();
+});
