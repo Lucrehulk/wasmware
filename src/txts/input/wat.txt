@@ -1,0 +1,10 @@
+(module
+  (import "env" "log" (func $log (param i32)))
+  (memory $0 1)
+  (export "memory" (memory $0))
+  (func $main
+    i32.const 42
+    call $log
+  )
+  (export "main" (func $main))
+)
