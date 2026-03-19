@@ -1,6 +1,9 @@
 # wasmware
 A tool that can modify WebAssembly modules to implement a stub loader that can secretly retrieve and execute a payload.
 
+# IMPORTANT NOTE
+This tool is solely designed as a proof of concept and is meant to provide education on how WebAssembly can be exploited. I am not responsible for what you do with this tool. Use wisely.
+
 The concept of wasmware is simple: 
 
 Wasm's obfuscated nature allows for anything to be encoded into memory. Most notably, this can be used to encode text, or more specifically, evaluable JavaScript. So, by creating (or utilizing an already existing) import that evals a slice of utf-8 memory, we can slickly execute code that doesn't immediately appear obvious imports. We also use the WebAssembly to mask the use of eval in the first place, as we access it via globalThis (or "window" in a browser) key access, the key being encoded utf-8 from the WebAssembly. When evaluating, we can then access our main payload where the real malicious code actually resides--the wasmware functionality simply serves as a stub to load such.
